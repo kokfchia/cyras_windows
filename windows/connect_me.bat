@@ -16,7 +16,12 @@ IF "%1"=="" (
 goto EOF
 
 :START
-@echo Use your userid: %CYRAS_USERID% as VNC password
+@echo.
+@echo Use your userid: %CYRAS_USERID% when the following happens:
+@echo       ^> Enter passphrase for key
+@echo       ^> VNC password
+@echo.
+ping 127.0.0.1 -n 5 > nul
 
 set USER_IDENT=cyras%CYRAS_USERID%
 set USER_KEY=%USER_IDENT%_id_rsa

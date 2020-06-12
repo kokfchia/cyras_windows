@@ -51,14 +51,18 @@ goto EOF
 set USER_IDENT=cyras%CYRAS_USERID%
 set SSH_KEY=%USER_IDENT%_id_rsa
 
-ssh-keygen -P "" -f "%SSH_KEY%"
+@echo.
+@echo Creating passphrase using your user id
+@echo.
+
+ssh-keygen -P "%CYRAS_USERID%" -f "%SSH_KEY%" -t rsa -b 2048
 
 set /p PUBLIC_KEY=<"%SSH_KEY%".pub
 
 ssh %USER_IDENT%@%CYRAS_HOSTNAME% "/opt/cyras/common/setup_home.sh "%PUBLIC_KEY%"" > status.log
-
+@echo.
 type status.log |findstr "Successfully enrolled you"
-
+@echo.
 IF "%ERRORLEVEL%" NEQ "0" ( 
     @echo %ERRORLEVEL%
     goto HANDLEERROR 

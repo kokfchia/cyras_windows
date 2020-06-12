@@ -64,7 +64,10 @@ To connect to Cyras run > connect_me.bat <id> where <id> is your userid you used
 
 Example output:
 >connect_me.bat 100123
-Use your userid: 100123 as VNC password
+Use your userid: 100123 when the following happens:
+      > Enter passphrase for key
+      > VNC password
+
 VNC display: 123
 Port: 6023
 
