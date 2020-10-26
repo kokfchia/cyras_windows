@@ -1,8 +1,9 @@
 @echo off
 setlocal
 set CYRAS_USERID=%1
-@rem set CYRAS_HOSTNAME=192.168.238.50
-set CYRAS_HOSTNAME=cyras-5thflr.ddns.net
+@rem set CYRAS_HOSTNAME=192.168.10.202
+@rem set CYRAS_HOSTNAME=cyras-5thflr.ddns.net
+call hostname.bat
 
 IF "%1"=="" ( 
         GOTO HELPER
@@ -17,24 +18,28 @@ goto EOF
 
 :START
 @echo.
+@echo Hostname - %CYRAS_HOSTNAME%
 @echo Use your userid: %CYRAS_USERID% when the following happens:
 @echo       ^> Enter passphrase for key
 @echo       ^> VNC password
 @echo.
 ping 127.0.0.1 -n 5 > nul
 
-set USER_IDENT=cyras%CYRAS_USERID%
-set USER_KEY=%USER_IDENT%_id_rsa
+set OS_USER=cyras%CYRAS_USERID%
+set USER_KEY=%OS_USER%_id_rsa
 
 SET DISPLAY_NUMBER=%CYRAS_USERID:~3,6%
-ECHO VNC display: %DISPLAY_NUMBER%          
+SET /A DISPLAY_INT = 0+%DISPLAY_NUMBER%
+echo Display number: %DISPLAY_NUMBER%
+echo VNC display: %DISPLAY_INT%
 
-SET /A PORTDISPLAY = 5900+%DISPLAY_NUMBER%
+SET /A PORTDISPLAY = 5900+%DISPLAY_INT%
 echo Port: %PORTDISPLAY%
 
-@rem goto EOF
+REM pause
+REM goto EOF
 
-start ssh -L %PORTDISPLAY%:localhost:%PORTDISPLAY% %USER_IDENT%@%CYRAS_HOSTNAME% -i %USER_KEY% /opt/cyras/common/setup_vnc.sh %CYRAS_USERID% %DISPLAY_NUMBER% 
+start ssh -L %PORTDISPLAY%:localhost:%PORTDISPLAY% %OS_USER%@%CYRAS_HOSTNAME% -i %USER_KEY% /opt/cyras/common/setup_vnc.sh %CYRAS_USERID% %DISPLAY_INT% 
 
 @rem %PORTDISPLAY%
 

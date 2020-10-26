@@ -1,8 +1,9 @@
 @echo off
 setlocal
 set CYRAS_USERID=%1
-@rem set CYRAS_HOSTNAME=192.168.238.50
-set CYRAS_HOSTNAME=cyras-5thflr.ddns.net
+REM set CYRAS_HOSTNAME=192.168.15.202
+REM set CYRAS_HOSTNAME=cyras-5thflr.ddns.net
+call hostname.bat
 
 IF "%1"=="" ( 
         GOTO HELPER
